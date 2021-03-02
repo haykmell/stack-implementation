@@ -1,5 +1,3 @@
-#include <iostream>
-
 template <typename T>
 class stackList
 {
@@ -11,11 +9,11 @@ private:
 public:
     stackList();
     ~stackList();
-    void push(T value);
+    void push(const T &value);
     void pop();
     bool empty() const;
     int size() const;
-    T top() const;
+    T &top() const;
 };
 
 // CONSTRUCTOR
@@ -42,7 +40,7 @@ int stackList<T>::size() const
 
 // Get latest element
 template <typename T>
-T stackList<T>::top() const
+T &stackList<T>::top() const
 {
     return buffer[Top];
 }
@@ -51,17 +49,17 @@ T stackList<T>::top() const
 template <typename T>
 bool stackList<T>::empty() const
 {
-    return (Top == -1) ? true : false;
+    return Top == -1;
 }
 
 // add element to stack
 template <typename T>
-void stackList<T>::push(T value)
+void stackList<T>::push(const T &value)
 {
     ++Top;
     if (capacity == Top)
     {
-        capacity = capacity * capacity;
+        capacity = capacity * 2;
         T *temp = new T[capacity];
 
         for (int i = 0; i < Top; i++)
@@ -78,6 +76,10 @@ void stackList<T>::push(T value)
 template <typename T>
 void stackList<T>::pop()
 {
+
+    if (Top == -1)
+        return;
+
     buffer[Top] = {};
     Top--;
 }
